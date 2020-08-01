@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  vpn:
+    build: .
+    container_name: vpn
+    environment:
+      TZ: "Asia/Tokyo"
+      LANG: "ja_JP.UTF-8"
+    ports:
+      - '443:443'
+      - '500:500/udp'
+      - '1702:1702/udp'
+      - '4500:4500/udp'
+    stop_grace_period: 1s
+    volumes:
+      - ./etc/backup.vpn_server.config:/usr/vpnserver/backup.vpn_server.config
+      - ./etc/chain_certs:/usr/vpnserver/chain_certs
+      - ./etc/lang.config:/usr/vpnserver/lang.config
+      - ./log/packet_log:/usr/vpnserver/packet_log
+      - ./log/security_log:/usr/vpnserver/security_log
+      - ./log/server_log:/usr/vpnserver/server_log
+      - ./etc/vpn_server.config:/usr/vpnserver/vpn_server.config
